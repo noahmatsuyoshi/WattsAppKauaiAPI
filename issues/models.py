@@ -15,7 +15,7 @@ class Issue(models.Model):
     longitude = models.DecimalField(max_digits=25,decimal_places=5)
     resolved = models.BooleanField(default=False)
 
-    poster = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    poster = models.ForeignKey('auth.User', related_name='issues', on_delete=models.CASCADE)
 
     #name = models.CharField(max_length=50, blank=True)
     #phone = PhoneNumberField(blank=True)

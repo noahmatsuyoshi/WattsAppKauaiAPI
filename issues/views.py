@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 class IssueView(viewsets.ModelViewSet):
     queryset = Issue.objects.all()
     serializer_class = IssueSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     def perform_create(self, serializer):
         serializer.save(poster=self.request.user)
 
