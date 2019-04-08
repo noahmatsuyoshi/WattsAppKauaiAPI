@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from phonenumber_field.modelfields import PhoneNumberField
+from phonenumber_field.serializerfields import PhoneNumberField
+
 
 # Create your models here.
 class Issue(models.Model):
@@ -15,13 +16,9 @@ class Issue(models.Model):
     longitude = models.DecimalField(max_digits=25,decimal_places=5)
     resolved = models.BooleanField(default=False)
 
-    poster = models.ForeignKey('auth.User', related_name='issues', on_delete=models.CASCADE)
-
-    #name = models.CharField(max_length=50, blank=True)
-    #phone = PhoneNumberField(blank=True)
-    #email = models.EmailField(blank=True)
-
-    
+    posterName = models.CharField(max_length=100, blank=True)
+    posterPhone = models.CharField(max_length=14, blank=True)
+    posterEmail = models.EmailField(blank=True)
 
     def __str__(self):
         return self.description

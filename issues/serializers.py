@@ -1,16 +1,13 @@
 from rest_framework import serializers
 from .models import Issue
 from django.contrib.auth.models import User
+from drf_extra_fields.fields import Base64ImageField
 
 class IssueSerializer(serializers.ModelSerializer):
-    poster = serializers.ReadOnlyField(source='poster.username')
+    #poster = serializers.ReadOnlyField(source='poster.username')
+    image = Base64ImageField()
     class Meta:
         model = Issue
-        fields = ('id', 'description', 'poster', 'issueType', 'image', 'date_time_posted', 'latitude', 'longitude', 'resolved')
+        fields = ('id', 'description', 'issueType', 'image', 'date_time_posted', 'latitude', 'longitude', 'resolved', 'posterName', 'posterPhone', 'posterEmail')
 
-class UserSerializer(serializers.ModelSerializer):
-    issues = serializers.PrimaryKeyRelatedField(many=True, queryset=Issue.objects.all())
-
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'issues')
+    
