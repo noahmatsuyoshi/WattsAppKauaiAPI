@@ -9,17 +9,19 @@ class EmployeeSerializer(UserDetailsSerializer):
     name = serializers.CharField()
     phone = serializers.CharField()
     email = serializers.EmailField()
-    admin = serializers.BooleanField()   
+    admin = serializers.BooleanField()
+    passwordChange = serializers.BooleanField()   
 
 
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('email', 'name', 'admin', 'phone', )
+        fields = UserDetailsSerializer.Meta.fields + ('email', 'name', 'admin', 'phone', 'passwordChange', )
 
     def update(self, instance, validated_data):
         name = validated_data.get('name', instance.name)
         phone = validated_data.get('phone', instance.phone)
         email = validated_data.get('email', instance.email)
         admin = validated_data.get('admin', instance.admin)
+        passwordChange = validated_data.get('passwordChange', instance.passwordChange)
 
         instance = super(EmployeeSerializer, self).update(instance, validated_data)
 
@@ -30,6 +32,7 @@ class EmployeeSerializer(UserDetailsSerializer):
             employee.phone = phone
             employee.email = email
             employee.admin = admin
+            employee.passwordChange = passwordChange
             employee.save()
         return instance
  

@@ -10,6 +10,7 @@ class Employee(AbstractUser):
     name = models.CharField(max_length=100, blank=True)
     phone = PhoneNumberField(blank=True)
     admin = models.BooleanField()
+    passwordChange = models.BooleanField()
 
     def __str__(self):
         return self.name
