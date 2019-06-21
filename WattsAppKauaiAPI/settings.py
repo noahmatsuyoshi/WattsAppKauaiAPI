@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+from datetime import timedelta
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,8 +25,8 @@ SECRET_KEY = '^p%bs6ak_(5vl-bk4&p1m!^u12xv0*oy=)s7tz75dy%p(p7pgr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.29']
-
+ALLOWED_HOSTS = ['172.20.10.4']
+SECURE_SSL_REDIRECT = False
 
 # Application definition
 
@@ -48,6 +48,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+    'issueTypes',
+    'allauth.socialaccount',
+    'push_notifications',
+    'pushNotifications',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
@@ -157,3 +162,39 @@ ACCOUNT_USERNAME_REQUIRED = False
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'employees.serializers.EmployeeSerializer'
 }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+    #"FCM_API_KEY": "[your api key]",
+    #"GCM_API_KEY": "[your api key]",
+    "APNS_CERTIFICATE": "Certificates/apns-dev-cert.pem",
+    "APNS_TOPIC": "com.kiuc.WattsAppKauaiReactNative",
+    "WNS_PACKAGE_SECURITY_ID": "[your package security id, e.g: 'ms-app://e-3-4-6234...']",
+    "WNS_SECRET_KEY": "[your app secret key, e.g.: 'KDiejnLKDUWodsjmewuSZkk']",
+    "WP_PRIVATE_KEY": "/path/to/your/private.pem",
+    "WP_CLAIMS": {'sub': "mailto: development@example.com"}
+}
+

@@ -1,4 +1,5 @@
 from django.urls import include, path
+from allauth.account import views
 
 urlpatterns = [
     path('employees/', include('employees.urls')),

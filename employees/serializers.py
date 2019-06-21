@@ -11,18 +11,20 @@ class EmployeeSerializer(UserDetailsSerializer):
     email = serializers.EmailField()
     admin = serializers.BooleanField()
     passwordChange = serializers.BooleanField()   
+    newIssueNotifications = serializers.BooleanField()
 
 
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('email', 'name', 'admin', 'phone', 'passwordChange', )
+        fields = UserDetailsSerializer.Meta.fields + ('email', 'name', 'admin', 'phone', 'passwordChange', 'newIssueNotifications', )
 
-    def update(self, instance, validated_data):
+    
+    """ def update(self, instance, validated_data):
         name = validated_data.get('name', instance.name)
         phone = validated_data.get('phone', instance.phone)
         email = validated_data.get('email', instance.email)
         admin = validated_data.get('admin', instance.admin)
         passwordChange = validated_data.get('passwordChange', instance.passwordChange)
-
+        
         instance = super(EmployeeSerializer, self).update(instance, validated_data)
 
         # get and update user profile
@@ -34,5 +36,5 @@ class EmployeeSerializer(UserDetailsSerializer):
             employee.admin = admin
             employee.passwordChange = passwordChange
             employee.save()
-        return instance
+        return instance """
  
